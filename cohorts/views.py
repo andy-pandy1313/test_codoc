@@ -26,9 +26,8 @@ class CohortViewSet(viewsets.ModelViewSet):
         except:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND) 
 
-
         #if user who has requested is not the owner or is not superuser => resend a code 403 (forbidden access)
-        if request.user.id == cohort.owner.id or not request.user.is_superuser: 
+        if request.user.id != cohort.owner.id or not request.user.is_superuser: 
             return HttpResponse(status=status.HTTP_403_FORBIDDEN)
         #Otherwise user is able to delete and we resend a success HTTP code
         else :
@@ -39,3 +38,7 @@ class CommentsViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsOwner | IsAuthenticated]
+
+   
+
+

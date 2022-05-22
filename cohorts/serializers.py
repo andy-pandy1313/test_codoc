@@ -32,3 +32,13 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ('id', 'comment', 'owner', 'cohort', 'patient', 'created_at', 'updated_at')
+
+    def validate(self, data):
+        try:
+            cohort = Cohort.objects.get(id = int(data['cohort']))
+        except:
+            raise serializers.ValidationError("Object not found")
+
+        if cohort.owner != request.user.id:
+            raise serializers.ValidationError("Cohort owner is not the same as comment owner")
+        return data

@@ -105,5 +105,5 @@ class PatientViewsetTestCase(APITestCase):
         }
         self.client.force_authenticate(u)       
 
-        response = self.client.post(reverse("comment:comment-list"), payload=payload)
-        self.assertEqual(response.status_code, 200)
+        response = self.client.post(reverse("comment:comment-list"), data=payload)
+        self.assertEqual(response.status_code, 201)
