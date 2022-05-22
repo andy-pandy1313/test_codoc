@@ -6,8 +6,8 @@ from django.utils import timezone
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
 
-from cohorts.factories import CohortFactory
-from cohorts.models import Cohort
+from cohorts.factories import CohortFactory, CommentsFactory
+from cohorts.models import Cohort, Comment
 from patients.factories import PatientFactory
 from patients.models import Patient
 
@@ -90,3 +90,20 @@ class PatientViewsetTestCase(APITestCase):
         response = self.client.delete(reverse("cohort:cohort-detail", args=(c.pk,)))
         self.assertEqual(response.status_code, 204)
         self.assertEqual(Cohort.objects.count(), 0)
+    
+    def test_comments_create(self):
+        u = User.objects.create_user("test")
+        p = PatientFactory()
+        c = CohortFactory()     
+
+        co = CommentsFactory()
+        payload = {
+            "comment": co.comment,
+            "owner": u.pk,
+            "patient": p.pk,
+            "cohort": c.pk,
+        }
+        self.client.force_authenticate(u)       
+
+        response = self.client.post(reverse("comment:comment-list"), payload=payload)
+        self.assertEqual(response.status_code, 200)

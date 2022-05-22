@@ -17,5 +17,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('v1/', include("patients.urls", namespace="patient")),
-    path('v1/', include("cohorts.urls", namespace="cohort"))
+    path('v1/', include("cohorts.urls", namespace="cohort")),
+    path('v1/', include("cohorts.urls", namespace="comment")),
+
+
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
 ]

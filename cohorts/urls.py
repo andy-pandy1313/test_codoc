@@ -6,5 +6,6 @@ app_name = "cohorts"
 
 router = DefaultRouter()
 router.register(r'cohorts', views.CohortViewSet, basename='cohort')
+router.register(r'comment', views.CommentsViewSet, basename='comment')
 
 urlpatterns = router.urls

@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'cohorts',
     'commons',
     'patients',
+
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [
